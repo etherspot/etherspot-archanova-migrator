@@ -1,14 +1,12 @@
 {
-  "name": "root",
+  "name": "@etherspot/archanova-migrator",
   "version": "0.0.0",
   "private": true,
   "description": "ETHERspot archanova migrator",
   "license": "UNLICENSED",
   "scripts": {
-    "clean": "lerna clean --yes",
-    "bootstrap": "lerna bootstrap"
+    "start": "exit 0"
   },
-  "devDependencies": {
-    "lerna": "3.22.1"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }
