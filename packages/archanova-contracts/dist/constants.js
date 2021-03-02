@@ -1,0 +1,31 @@
+/* eslint-disable */
+
+module.exports = {
+  ContractNames: {
+    AbstractAccount: 'AbstractAccount',
+    AbstractENSAddrResolver: 'AbstractENSAddrResolver',
+    Account: 'Account',
+    AccountFriendRecovery: 'AccountFriendRecovery',
+    AccountLibrary: 'AccountLibrary',
+    AccountProviderV1: 'AccountProviderV1',
+    AccountProviderV2: 'AccountProviderV2',
+    AccountProxyV1: 'AccountProxyV1',
+    AccountProxyV2: 'AccountProxyV2',
+    Address: 'Address',
+    AddressLibrary: 'AddressLibrary',
+    AddressLibraryWrapper: 'AddressLibraryWrapper',
+    ContractCreator: 'ContractCreator',
+    ECDSA: 'ECDSA',
+    ENS: 'ENS',
+    ENSMultiManager: 'ENSMultiManager',
+    ENSMultiManagerWrapper: 'ENSMultiManagerWrapper',
+    ERC1271: 'ERC1271',
+    ERC20: 'ERC20',
+    ERC20Detailed: 'ERC20Detailed',
+    ExampleToken: 'ExampleToken',
+    Guarded: 'Guarded',
+    IERC20: 'IERC20',
+    SafeMath: 'SafeMath',
+    VirtualPaymentManager: 'VirtualPaymentManager',
+  },
+};

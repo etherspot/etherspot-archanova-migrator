@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "./dist"
+  },
+  "include": [
+    "deploy/**/*",
+    "extensions/**/*"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

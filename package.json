@@ -6,9 +6,21 @@
   "license": "UNLICENSED",
   "scripts": {
     "clean": "lerna clean --yes",
-    "bootstrap": "lerna bootstrap"
+    "bootstrap": "lerna bootstrap",
+    "archanova-contracts:deploy:localA": "lerna run --no-prefix --stream --scope @etherspot/archanova-contracts deploy:localA",
+    "archanova-contracts:deploy:localB": "lerna run --no-prefix --stream --scope @etherspot/archanova-contracts deploy:localB"
   },
   "devDependencies": {
-    "lerna": "3.22.1"
+    "@types/node": "13.9.2",
+    "@typescript-eslint/eslint-plugin": "2.34.0",
+    "@typescript-eslint/parser": "2.34.0",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-plugin-import": "2.20.2",
+    "lerna": "3.22.1",
+    "prettier": "1.19.1",
+    "ts-node": "8.10.2",
+    "tsconfig-paths": "3.9.0",
+    "typescript": "3.9.7"
   }
 }
