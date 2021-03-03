@@ -11,13 +11,15 @@ $ npm i @etherspot/archanova-migrator -S
 
 ```typescript
 import { Migrator } from '@etherspot/archanova-migrator';
-import { utils } from 'ethers';
+import { utils, Wallet } from 'ethers';
 
 let migrator = new Migrator({
   chainId: 42, // optional, default 1 - mainnet
   archanovaAccount: '0x...', 
   etherspotAccount: '0x...'
 });
+
+const archanovaAccountDevice = Wallet.createRandom();
 
 // each migration step is optional
 migrator = migrator
@@ -35,17 +37,18 @@ migrator = migrator
   ])
   .transferENSNode(utils.namehash('example.eth'))
 
-const signature: string; // personal sign `migrator.migrationMessage` with archanova account owner device
+// personal sign `migrator.migrationMessage` with archanova account owner device
+const archanovaAccountDeviceSignature = await archanovaAccountDevice.signMessage(migrator.migrationMessage);
 
 // encode migration into archanova account transaction args
-migrator.encodeArchanovaAccountTransactionArgs(signature);
+migrator.encodeArchanovaAccountTransactionArgs(archanovaAccountDeviceSignature);
 // [ 
 //   '0x...', 0, '0x...', 
 //   '0x...', 0, '0x...', 
 // ]
 
 // encode migration into transaction requests
-migrator.encodeTransactionRequests(signature);
+migrator.encodeTransactionRequests(archanovaAccountDeviceSignature);
 // [
 //   { to: '0x...', data: '0x...' },
 //   { to: '0x...', data: '0x...' },
