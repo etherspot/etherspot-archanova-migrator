@@ -18,6 +18,7 @@ let migrator = new Migrator({
   etherspotAccount: '0x...'
 });
 
+// each migration step is optional
 migrator = migrator
   .addAccountDevice()
   .transferBalance(utils.parseEther('0.05'))
@@ -33,7 +34,7 @@ migrator = migrator
   ])
   .transferENSNode(utils.namehash('example.eth'))
 
-const signature: string; // sign `migrator.migrationMessage` with archanova account owner device
+const signature: string; // personal sign `migrator.migrationMessage` with archanova account owner device
 
 // encode migration into archanova account transaction args
 migrator.encodeArchanovaAccountTransactionArgs(signature);
