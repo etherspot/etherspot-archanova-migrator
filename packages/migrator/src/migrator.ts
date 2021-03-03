@@ -46,19 +46,19 @@ export class Migrator {
     );
 
     if (!this.migratorAddress) {
-      throw new MigratorException('Unsupported network', {
+      throw new MigratorException('unsupported network', {
         chainId,
       });
     }
 
     if (!isAddress(archanovaAccount)) {
-      throw new MigratorException('Invalid archanova account address', {
+      throw new MigratorException('invalid archanova account address', {
         archanovaAccount,
       });
     }
 
     if (!isAddress(etherspotAccount)) {
-      throw new MigratorException('Invalid etherspot account address', {
+      throw new MigratorException('invalid etherspot account address', {
         etherspotAccount,
       });
     }
@@ -84,7 +84,7 @@ export class Migrator {
     value = BigNumber.from(value || 0);
 
     if (value.eq(0)) {
-      throw new MigratorException('Value should be greater then 0', {
+      throw new MigratorException('value should be greater then 0', {
         value,
       });
     }
@@ -95,7 +95,7 @@ export class Migrator {
 
   transferERC20Tokens(tokens: MigrationToken[]): this {
     if (!Array.isArray(tokens) || !tokens.length) {
-      throw new MigratorException('Invalid tokens list', {
+      throw new MigratorException('invalid tokens list', {
         tokens,
       });
     }
@@ -105,7 +105,7 @@ export class Migrator {
 
       if (amount.eq(0)) {
         throw new MigratorException(
-          'Amount of token should be greater then 0',
+          'amount of token should be greater then 0',
           {
             token,
             amount,
@@ -114,7 +114,7 @@ export class Migrator {
       }
 
       if (!isAddress(token)) {
-        throw new MigratorException('Invalid token address', {
+        throw new MigratorException('invalid token address', {
           token,
         });
       }
@@ -132,7 +132,7 @@ export class Migrator {
     const ensNode = utils.namehash(ensName);
 
     if (!ensNode) {
-      throw new MigratorException('Invalid ens name', {
+      throw new MigratorException('invalid ens name', {
         ensName,
         ensNode,
       });
@@ -156,7 +156,7 @@ export class Migrator {
     } = this.migration;
 
     if (!transferBalance && !transferERC20Tokens && !transferENSNode) {
-      throw new MigratorException('No transaction requests to encode');
+      throw new MigratorException('no transaction requests to encode');
     }
 
     const { archanovaAccount, etherspotAccount } = this.options;
@@ -264,7 +264,7 @@ export class Migrator {
       );
     } catch (err) {
       throw new MigratorException(
-        'No archanova account transaction args to encode',
+        'no archanova account transaction args to encode',
       );
     }
 
