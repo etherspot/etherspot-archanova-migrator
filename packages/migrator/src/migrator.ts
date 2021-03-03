@@ -146,9 +146,7 @@ export class Migrator {
   encodeTransactionRequests(
     archanovaAccountDeviceSignature: string,
   ): TransactionRequest[] {
-    let result: TransactionRequest[] = null;
-
-    const { archanovaAccount, etherspotAccount } = this.options;
+    const result: TransactionRequest[] = [];
 
     const {
       addAccountDevice,
@@ -157,95 +155,18 @@ export class Migrator {
       transferENSNode,
     } = this.migration;
 
-    if (transferBalance || transferERC20Tokens || transferENSNode) {
-      result = [];
+    if (!transferBalance && !transferERC20Tokens && !transferENSNode) {
+      throw new MigratorException('No transaction requests to encode');
+    }
 
-      if (addAccountDevice) {
-        const to = archanovaAccount;
-        const data = this.accountInterface.encodeFunctionData('addDevice', [
-          this.migratorAddress,
-          true,
-        ]);
+    const { archanovaAccount, etherspotAccount } = this.options;
 
-        result.push({
-          to,
-          data,
-        });
-      }
-
+    if (addAccountDevice) {
       const to = archanovaAccount;
-      let data: string;
-
-      if (transferBalance && !transferERC20Tokens && !transferENSNode) {
-        data = this.migratorInterface.encodeFunctionData('transferBalance', [
-          archanovaAccount,
-          etherspotAccount,
-          transferBalance,
-          archanovaAccountDeviceSignature,
-        ]);
-      } else if (!transferBalance && transferERC20Tokens && !transferENSNode) {
-        data = this.migratorInterface.encodeFunctionData(
-          'transferERC20Tokens',
-          [
-            archanovaAccount,
-            etherspotAccount,
-            ...prepareTokensArgs(transferERC20Tokens),
-            archanovaAccountDeviceSignature,
-          ],
-        );
-      } else if (transferBalance && transferERC20Tokens && !transferENSNode) {
-        data = this.migratorInterface.encodeFunctionData(
-          'transferBalanceAndERC20Tokens',
-          [
-            archanovaAccount,
-            etherspotAccount,
-            transferBalance,
-            ...prepareTokensArgs(transferERC20Tokens),
-            archanovaAccountDeviceSignature,
-          ],
-        );
-      } else if (!transferBalance && !transferERC20Tokens && transferENSNode) {
-        data = this.migratorInterface.encodeFunctionData('transferENSNode', [
-          archanovaAccount,
-          etherspotAccount,
-          transferENSNode,
-          archanovaAccountDeviceSignature,
-        ]);
-      } else if (transferBalance && !transferERC20Tokens && transferENSNode) {
-        data = this.migratorInterface.encodeFunctionData(
-          'transferBalanceAndENSNode',
-          [
-            archanovaAccount,
-            etherspotAccount,
-            transferBalance,
-            transferENSNode,
-            archanovaAccountDeviceSignature,
-          ],
-        );
-      } else if (!transferBalance && transferERC20Tokens && transferENSNode) {
-        data = this.migratorInterface.encodeFunctionData(
-          'transferERC20TokensAndENSNode',
-          [
-            archanovaAccount,
-            etherspotAccount,
-            ...prepareTokensArgs(transferERC20Tokens),
-            transferENSNode,
-            archanovaAccountDeviceSignature,
-          ],
-        );
-      } else if (transferBalance && transferERC20Tokens && transferENSNode) {
-        data = this.migratorInterface.encodeFunctionData(
-          'transferBalanceAndERC20TokensAndENSNode',
-          [
-            archanovaAccount,
-            etherspotAccount,
-            transferBalance,
-            ...prepareTokensArgs(transferERC20Tokens),
-            transferENSNode,
-            archanovaAccountDeviceSignature,
-          ],
-        );
-      }
+      const data = this.accountInterface.encodeFunctionData('addDevice', [
+        this.migratorAddress,
+        true,
+      ]);
 
       result.push({
         to,
@@ -253,26 +174,106 @@ export class Migrator {
       });
     }
 
+    const to = archanovaAccount;
+    let data: string;
+
+    if (transferBalance && !transferERC20Tokens && !transferENSNode) {
+      data = this.migratorInterface.encodeFunctionData('transferBalance', [
+        archanovaAccount,
+        etherspotAccount,
+        transferBalance,
+        archanovaAccountDeviceSignature,
+      ]);
+    } else if (!transferBalance && transferERC20Tokens && !transferENSNode) {
+      data = this.migratorInterface.encodeFunctionData('transferERC20Tokens', [
+        archanovaAccount,
+        etherspotAccount,
+        ...prepareTokensArgs(transferERC20Tokens),
+        archanovaAccountDeviceSignature,
+      ]);
+    } else if (transferBalance && transferERC20Tokens && !transferENSNode) {
+      data = this.migratorInterface.encodeFunctionData(
+        'transferBalanceAndERC20Tokens',
+        [
+          archanovaAccount,
+          etherspotAccount,
+          transferBalance,
+          ...prepareTokensArgs(transferERC20Tokens),
+          archanovaAccountDeviceSignature,
+        ],
+      );
+    } else if (!transferBalance && !transferERC20Tokens && transferENSNode) {
+      data = this.migratorInterface.encodeFunctionData('transferENSNode', [
+        archanovaAccount,
+        etherspotAccount,
+        transferENSNode,
+        archanovaAccountDeviceSignature,
+      ]);
+    } else if (transferBalance && !transferERC20Tokens && transferENSNode) {
+      data = this.migratorInterface.encodeFunctionData(
+        'transferBalanceAndENSNode',
+        [
+          archanovaAccount,
+          etherspotAccount,
+          transferBalance,
+          transferENSNode,
+          archanovaAccountDeviceSignature,
+        ],
+      );
+    } else if (!transferBalance && transferERC20Tokens && transferENSNode) {
+      data = this.migratorInterface.encodeFunctionData(
+        'transferERC20TokensAndENSNode',
+        [
+          archanovaAccount,
+          etherspotAccount,
+          ...prepareTokensArgs(transferERC20Tokens),
+          transferENSNode,
+          archanovaAccountDeviceSignature,
+        ],
+      );
+    } else if (transferBalance && transferERC20Tokens && transferENSNode) {
+      data = this.migratorInterface.encodeFunctionData(
+        'transferBalanceAndERC20TokensAndENSNode',
+        [
+          archanovaAccount,
+          etherspotAccount,
+          transferBalance,
+          ...prepareTokensArgs(transferERC20Tokens),
+          transferENSNode,
+          archanovaAccountDeviceSignature,
+        ],
+      );
+    }
+
+    result.push({
+      to,
+      data,
+    });
+
     return result;
   }
 
   encodeArchanovaAccountTransactionArgs(
     archanovaAccountDeviceSignature: string,
   ): ArchanovaAccountTransactionArgs {
-    let result: ArchanovaAccountTransactionArgs = null;
+    let requests: TransactionRequest[];
 
-    const requests = this.encodeTransactionRequests(
-      archanovaAccountDeviceSignature,
-    );
+    try {
+      requests = this.encodeTransactionRequests(
+        archanovaAccountDeviceSignature,
+      );
+    } catch (err) {
+      throw new MigratorException(
+        'No archanova account transaction args to encode',
+      );
+    }
 
-    if (requests) {
-      const [req1, req2] = requests;
+    const [req1, req2] = requests;
 
-      result = [req1.to, 0, req2.data];
+    const result: ArchanovaAccountTransactionArgs = [req1.to, 0, req2.data];
 
-      if (req2) {
-        result.push(req2.to, 0, req2.data);
-      }
+    if (req2) {
+      result.push(req2.to, 0, req2.data);
     }
 
     return result;
