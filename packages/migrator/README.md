@@ -20,7 +20,7 @@ let migrator = new Migrator({
 
 // each migration step is optional
 migrator = migrator
-  .addAccountDevice()
+  .addAccountDevice() // adds the migrator as an archanova account owner device
   .transferBalance(utils.parseEther('0.05'))
   .transferERC20Tokens([
     { 
@@ -36,10 +36,10 @@ migrator = migrator
 
 const signature: string; // personal sign `migrator.migrationMessage` with archanova account owner device
 
-// encode migration into archanova account transaction args
+// encodes migration into archanova account transaction args
 migrator.encodeArchanovaAccountTransactionArgs(signature);
 
-// encode migration into transaction requests
+// encodes migration into transaction requests
 migrator.encodeTransactionRequests(signature);
 
 ```
