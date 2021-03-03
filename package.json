@@ -18,7 +18,8 @@
     "contracts-platform:compile": "lerna run --no-prefix --stream --scope @etherspot/archanova-contracts-platform compile",
     "contracts-platform:deploy:localA": "lerna run --no-prefix --stream --scope @etherspot/archanova-contracts-platform deploy:localA",
     "contracts-platform:deploy:localB": "lerna run --no-prefix --stream --scope @etherspot/archanova-contracts-platform deploy:localB",
-    "contracts-platform:build": "lerna run --no-prefix --stream --scope @etherspot/archanova-contracts-platform build"
+    "contracts-platform:build": "lerna run --no-prefix --stream --scope @etherspot/archanova-contracts-platform build",
+    "migrator:build": "lerna run --no-prefix --stream --scope @etherspot/archanova-migrator build"
   },
   "devDependencies": {
     "@types/node": "13.9.2",

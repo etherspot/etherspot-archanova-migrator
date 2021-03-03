@@ -18,14 +18,9 @@ export interface MigrationToken {
   amount: BigNumberish;
 }
 
-export type ArchanovaAccountTransactionArgs = [
-  string,
-  any,
-  string,
-  string?,
-  any?,
-  string?,
-];
+export type ArchanovaAccountTransactionArgs =
+  | [string, any, string]
+  | [string, any, string, string, any, string];
 
 export interface TransactionRequest {
   to: string;

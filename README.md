@@ -9,10 +9,10 @@ $ npm run bootstrap
 
 ## Packages
 
-* [contracts-common](./packages/contracts-common)
-* [contracts-migrator](./packages/contracts-migrator)
-* [contracts-platform](./packages/contracts-platform)
-* [migrator](./packages/migrator)
+* **[migrator](./packages/migrator) - migrator package**
+* [contracts-common](./packages/contracts-common) - common contracts package
+* [contracts-migrator](./packages/contracts-migrator) - migrator contracts
+* [contracts-platform](./packages/contracts-platform) - archanova contracts
 
 ## License
 
