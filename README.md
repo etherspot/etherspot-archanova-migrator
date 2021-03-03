@@ -17,4 +17,4 @@ $ npm run bootstrap
 
 ## License
 
-UNLICENSED
+MIT
