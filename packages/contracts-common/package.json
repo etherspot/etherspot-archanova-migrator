@@ -1,0 +1,32 @@
+{
+  "name": "@etherspot/archanova-contracts-common",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ETHERspot archanova contracts common",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "compile": "tsc",
+    "compile-watch": "tsc --watch",
+    "prebuild": "npm run clean",
+    "build": "npm run compile"
+  },
+  "dependencies": {
+    "@nomiclabs/hardhat-etherscan": "2.1.1",
+    "ethers": "5.0.24",
+    "fs-extra": "9.0.0",
+    "hardhat": "2.0.4",
+    "hardhat-deploy": "0.7.0-beta.37",
+    "hardhat-deploy-ethers": "0.3.0-beta.7"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "8.1.0",
+    "@types/mocha": "7.0.2",
+    "@types/node": "13.9.2",
+    "rimraf": "3.0.2",
+    "ts-node": "8.10.2",
+    "typescript": "3.9.7"
+  }
+}

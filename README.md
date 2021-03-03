@@ -7,9 +7,12 @@ $ npm i
 $ npm run bootstrap
 ```
 
-## Usage
+## Packages
 
-(TODO)
+* [contracts-common](./packages/contracts-common)
+* [contracts-migrator](./packages/contracts-migrator)
+* [contracts-platform](./packages/contracts-platform)
+* [migrator](./packages/migrator)
 
 ## License
 
