@@ -17,7 +17,7 @@ import "./ArchanovaAccount.sol";
 contract ArchanovaMigrator is Initializable {
   using SignatureLib for bytes32;
 
-  bytes32 constant private MIGRATION_PREFIX = keccak256(abi.encodePacked("etherspot <> archanova migration"));
+  bytes32 constant private MIGRATION_MESSAGE_PREFIX = keccak256(abi.encodePacked("etherspot <> archanova migration"));
 
   ENSController public ensController;
   ENSRegistry public ensRegistry;
@@ -398,7 +398,7 @@ contract ArchanovaMigrator is Initializable {
         keccak256(abi.encodePacked(
           chainId,
           address(this),
-          MIGRATION_PREFIX,
+          MIGRATION_MESSAGE_PREFIX,
           archanovaAccount,
           etherspotAccount
         ))

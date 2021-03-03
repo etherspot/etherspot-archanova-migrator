@@ -21,26 +21,40 @@ export function getNetworkName(chainId: string | number): NetworkNames {
   return result;
 }
 
+export function getNetworkEnvPrefix(networkName: NetworkNames): string {
+  return networkName.replace(/([A-Z])+/, '_$1').toUpperCase();
+}
+
+export function getProviderUrl(
+  networkName: NetworkNames,
+  defaultProvider?: 'infura' | string,
+): string {
+  const envPrefix = getNetworkEnvPrefix(networkName);
+
+  let result = process.env[`${envPrefix}_PROVIDER_ENDPOINT`];
+
+  if (!result) {
+    switch (defaultProvider) {
+      case 'infura':
+        result = `https://${networkName}.infura.io/v3/${process.env.INFURA_TOKEN}`;
+        break;
+
+      default:
+        result = defaultProvider;
+    }
+  }
+
+  return result;
+}
+
 export function createConfigNetwork(
   networkName: NetworkNames,
   chainId: number,
   defaultProvider?: 'infura' | string,
   defaultGasPrice?: number,
 ): HardhatUserConfig['networks'] {
-  const envPrefix = networkName.replace(/([A-Z])+/, '_$1').toUpperCase();
-
-  let url = process.env[`${envPrefix}_PROVIDER_ENDPOINT`];
-
-  if (!url) {
-    switch (defaultProvider) {
-      case 'infura':
-        url = `https://${networkName}.infura.io/v3/${process.env.INFURA_TOKEN}`;
-        break;
-
-      default:
-        url = defaultProvider;
-    }
-  }
+  const url = getProviderUrl(networkName);
+  const envPrefix = getNetworkEnvPrefix(networkName);
 
   let gasPrice =
     parseInt(process.env[`${envPrefix}_PROVIDER_GAS_PRICE`], 10) || undefined;

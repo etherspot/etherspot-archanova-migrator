@@ -15,12 +15,12 @@
   },
   "dependencies": {
     "@ensdomains/ens": "0.4.0",
-    "@etherspot/archanova-contracts-common": "1.0.0",
-    "@etherspot/contracts": "1.0.0",
     "openzeppelin-solidity": "2.1.2",
     "solidity-bytes-utils": "0.0.8"
   },
   "devDependencies": {
+    "@etherspot/archanova-contracts-common": "1.0.0",
+    "@etherspot/contracts": "1.0.0",
     "@types/mocha": "7.0.2",
     "@types/node": "13.9.2",
     "ethers": "5.0.24",

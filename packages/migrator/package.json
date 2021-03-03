@@ -7,16 +7,22 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "start": "exit 0"
+    "clean": "rimraf ./dist",
+    "compile": "tsc",
+    "compile-watch": "tsc --watch",
+    "prebuild": "npm run clean",
+    "build": "npm run compile"
   },
   "dependencies": {
-    "@etherspot/archanova-contracts-migrator": "1.0.0",
-    "@etherspot/contracts": "1.0.0"
+    "@etherspot/archanova-contracts-migrator": "1.0.0"
   },
   "devDependencies": {
+    "@etherspot/archanova-contracts-common": "1.0.0",
+    "@etherspot/contracts": "1.0.0",
     "@types/node": "13.9.2",
     "ethers": "5.0.8",
     "fs-extra": "9.0.0",
+    "rimraf": "3.0.2",
     "ts-node": "8.10.2",
     "typescript": "3.9.7"
   },

@@ -16,12 +16,11 @@
     "build": "npm run build:dist",
     "build:dist": "hardhat build-dist"
   },
-  "dependencies": {
-    "@etherspot/contracts": "1.0.0",
-    "@etherspot/archanova-contracts-common": "1.0.0",
-    "@etherspot/archanova-contracts-platform": "1.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "@etherspot/archanova-contracts-common": "1.0.0",
+    "@etherspot/archanova-contracts-platform": "1.0.0",
+    "@etherspot/contracts": "1.0.0",
     "@types/mocha": "7.0.2",
     "@types/node": "13.9.2",
     "ethers": "5.0.24",
