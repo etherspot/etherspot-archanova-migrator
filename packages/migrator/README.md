@@ -3,6 +3,7 @@
 ## Installation
 
 ```bash
+$ npm i ethers@^5.0.8 -S
 $ npm i @etherspot/archanova-migrator -S
 ```
 
