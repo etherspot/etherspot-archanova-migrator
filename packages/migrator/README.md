@@ -39,9 +39,18 @@ const signature: string; // personal sign `migrator.migrationMessage` with archa
 
 // encodes migration into archanova account transaction args
 migrator.encodeArchanovaAccountTransactionArgs(signature);
+// [
+//   { to: '0x...', data: '0x...' },
+//   { to: '0x...', data: '0x...' },
+// ]
 
 // encodes migration into transaction requests
 migrator.encodeTransactionRequests(signature);
+// [ 
+//    '0x...', 0, '0x...', 
+//    '0x...', 0, '0x...', 
+// ]
+
 
 ```
 
