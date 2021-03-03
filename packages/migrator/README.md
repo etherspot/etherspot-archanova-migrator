@@ -33,7 +33,7 @@ migrator = migrator
   ])
   .transferENSNode(utils.namehash('example.eth'))
 
-const signature: string; // sign `migrator.migratorMessage` with archanova owner device
+const signature: string; // sign `migrator.migrationMessage` with archanova account owner device
 
 // encode migration into archanova account transaction args
 migrator.encodeArchanovaAccountTransactionArgs(signature);
