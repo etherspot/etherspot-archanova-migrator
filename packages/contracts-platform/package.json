@@ -1,7 +1,6 @@
 {
   "name": "@etherspot/archanova-contracts-platform",
-  "version": "1.0.0",
-  "private": true,
+  "version": "0.1.0",
   "description": "ETHERspot archanova platform contracts",
   "license": "MIT",
   "main": "./dist/index.js",
@@ -19,7 +18,7 @@
     "solidity-bytes-utils": "0.0.8"
   },
   "devDependencies": {
-    "@etherspot/archanova-contracts-common": "1.0.0",
+    "@etherspot/archanova-contracts-common": "0.1.0",
     "@etherspot/contracts": "1.0.0",
     "@types/mocha": "7.0.2",
     "@types/node": "13.9.2",

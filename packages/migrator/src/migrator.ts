@@ -16,7 +16,7 @@ import { MigratorException } from './migrator.exception';
 import { isAddress, prepareTokensArgs } from './utils';
 
 export class Migrator {
-  readonly migrationMessage: string;
+  readonly migrationMessage: Uint8Array;
 
   private readonly options: MigratorOptions;
 
@@ -63,15 +63,17 @@ export class Migrator {
       });
     }
 
-    this.migrationMessage = utils.solidityKeccak256(
-      ['uint256', 'address', 'bytes32', 'address', 'address'],
-      [
-        chainId,
-        this.migratorAddress,
-        MIGRATION_MESSAGE_PREFIX,
-        archanovaAccount,
-        etherspotAccount,
-      ],
+    this.migrationMessage = utils.arrayify(
+      utils.solidityKeccak256(
+        ['uint256', 'address', 'bytes32', 'address', 'address'],
+        [
+          chainId,
+          this.migratorAddress,
+          MIGRATION_MESSAGE_PREFIX,
+          archanovaAccount,
+          etherspotAccount,
+        ],
+      ),
     );
   }
 
@@ -162,19 +164,17 @@ export class Migrator {
     const { archanovaAccount, etherspotAccount } = this.options;
 
     if (addAccountDevice) {
-      const to = archanovaAccount;
       const data = this.accountInterface.encodeFunctionData('addDevice', [
         this.migratorAddress,
         true,
       ]);
 
       result.push({
-        to,
+        to: archanovaAccount,
         data,
       });
     }
 
-    const to = archanovaAccount;
     let data: string;
 
     if (transferBalance && !transferERC20Tokens && !transferENSNode) {
@@ -246,7 +246,7 @@ export class Migrator {
     }
 
     result.push({
-      to,
+      to: this.migratorAddress,
       data,
     });
 

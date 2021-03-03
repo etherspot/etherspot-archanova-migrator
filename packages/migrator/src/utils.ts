@@ -6,8 +6,8 @@ export function isAddress(value: string): boolean {
 
   if (value) {
     try {
-      const address = utils.getAddress(value).toLowerCase();
-      result = address === value.toLowerCase();
+      const address = utils.getAddress(value);
+      result = address === value || address.toLowerCase() === value;
     } catch (err) {
       result = false;
     }

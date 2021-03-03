@@ -8,6 +8,7 @@
     "clean": "lerna clean --yes",
     "bootstrap": "lerna bootstrap",
     "contracts-common:build": "lerna run --no-prefix --stream --scope @etherspot/archanova-contracts-common build",
+    "contracts-common:compile-watch": "lerna run --no-prefix --stream --scope @etherspot/archanova-contracts-common compile-watch",
     "contracts-migrator:compile": "lerna run --no-prefix --stream --scope @etherspot/archanova-contracts-migrator compile",
     "contracts-migrator:deploy:mainnet": "lerna run --no-prefix --stream --scope @etherspot/archanova-contracts-migrator deploy:mainnet",
     "contracts-migrator:deploy:ropsten": "lerna run --no-prefix --stream --scope @etherspot/archanova-contracts-migrator deploy:ropsten",
@@ -19,7 +20,9 @@
     "contracts-platform:deploy:localA": "lerna run --no-prefix --stream --scope @etherspot/archanova-contracts-platform deploy:localA",
     "contracts-platform:deploy:localB": "lerna run --no-prefix --stream --scope @etherspot/archanova-contracts-platform deploy:localB",
     "contracts-platform:build": "lerna run --no-prefix --stream --scope @etherspot/archanova-contracts-platform build",
-    "migrator:build": "lerna run --no-prefix --stream --scope @etherspot/archanova-migrator build"
+    "migrator:build": "lerna run --no-prefix --stream --scope @etherspot/archanova-migrator build",
+    "migrator:compile-watch": "lerna run --no-prefix --stream --scope @etherspot/archanova-migrator compile-watch",
+    "migrator-example:start": "lerna run --no-prefix --stream --scope @etherspot/archanova-migrator-example start"
   },
   "devDependencies": {
     "@types/node": "13.9.2",
