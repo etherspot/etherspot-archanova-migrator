@@ -37,14 +37,14 @@ migrator = migrator
 
 const signature: string; // personal sign `migrator.migrationMessage` with archanova account owner device
 
-// encodes migration into archanova account transaction args
+// encode migration into archanova account transaction args
 migrator.encodeArchanovaAccountTransactionArgs(signature);
 // [ 
 //   '0x...', 0, '0x...', 
 //   '0x...', 0, '0x...', 
 // ]
 
-// encodes migration into transaction requests
+// encode migration into transaction requests
 migrator.encodeTransactionRequests(signature);
 // [
 //   { to: '0x...', data: '0x...' },
