@@ -6,7 +6,7 @@
 
 ```bash
 $ npm i
-$ npm run bootstrap
+$ npm run lerna:bootstrap
 ```
 
 ## Packages
@@ -31,7 +31,7 @@ $ npm run bootstrap
    export OMIT_MIGRATE_ERC20_TOKEN_2=0  # off by default
    export OMIT_MIGRATE_ENS_NAME=0       # off by default
    ```
-3. Deploy contracts to localnets
+3. Deploy contracts to `localnets`
    ```bash
    $ npm run deploy:localA
    $ npm run deploy:localB
