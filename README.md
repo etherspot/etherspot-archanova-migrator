@@ -24,7 +24,7 @@ $ npm run lerna:bootstrap
 1. Start [local infra](https://github.com/etherspot/etherspot-infra)
 2. Setup envs
    ```bash
-   export LOCAL_A_PROVIDER_PRIVATE_KEY=0x... # use infra deployer private key
+   export LOCAL_A_PROVIDER_PRIVATE_KEY=0x... # use infra account deployer private key
    export LOCAL_A_PROVIDER_ENDPOINT=http://localhost:8545
    export OMIT_MIGRATE_BALANCE=0        # off by default
    export OMIT_MIGRATE_ERC20_TOKEN_1=0  # off by default
