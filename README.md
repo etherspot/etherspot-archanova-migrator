@@ -11,9 +11,9 @@ $ npm run lerna:bootstrap
 
 ## Packages
 
-* **[migrator](./packages/migrator) - migrator package**
+* **[migrator](./packages/migrator) - main migrator package**
 * [migrator-example](./packages/migrator-example) - migrator example
-* [contracts-common](./packages/contracts-common) - common contracts package
+* [contracts-common](./packages/contracts-common) - common contracts
 * [contracts-migrator](./packages/contracts-migrator) - migrator contracts
 * [contracts-platform](./packages/contracts-platform) - archanova contracts
 
