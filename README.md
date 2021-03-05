@@ -45,7 +45,6 @@ $ npm run bootstrap
    $ npm run migrator-example:start
    ```
 
-   Output
    ```
    * State before migration
    
