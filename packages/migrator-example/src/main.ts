@@ -1,4 +1,4 @@
-import { Migrator } from '@etherspot/archanova-migrator';
+import { MigrationToken, Migrator } from '@etherspot/archanova-migrator';
 import { chainId, gasPrice } from './constants';
 import { erc20Token1, erc20Token2 } from './contracts';
 import {
@@ -9,8 +9,16 @@ import {
   logLabel,
   topUpAccount,
 } from './utils';
+import { config } from './config';
 
 async function main(): Promise<void> {
+  const {
+    migrateBalance,
+    migrateERC20Token1,
+    migrateERC20Token2,
+    migrateENSName,
+  } = config;
+
   const archanovaAccount = await createArchanovaAccount();
   const etherspotAccount = createEtherspotAccount();
 
@@ -20,12 +28,12 @@ async function main(): Promise<void> {
   const balanceWei = await topUpAccount(archanovaAccount, '20');
   const balanceERCToken1 = await topUpAccount(
     archanovaAccount,
-    4000,
+    '0.012223',
     erc20Token1,
   );
   const balanceERCToken2 = await topUpAccount(
     archanovaAccount,
-    122,
+    2140,
     erc20Token2,
   );
 
@@ -35,7 +43,7 @@ async function main(): Promise<void> {
     etherspotAccount,
   );
 
-  const migrator = new Migrator({
+  let migrator = new Migrator({
     chainId,
     archanovaAccount: archanovaAccount.address,
     etherspotAccount: etherspotAccount.address,
@@ -47,21 +55,38 @@ async function main(): Promise<void> {
     migrator.migrationMessage,
   );
 
-  const txRequests = migrator
-    .addAccountDevice()
-    .transferBalance(balanceWei)
-    .transferERC20Tokens([
-      {
+  migrator.addAccountDevice();
+
+  if (migrateBalance) {
+    migrator.transferBalance(balanceWei);
+  }
+
+  if (migrateERC20Token1 || migrateERC20Token2) {
+    const migrationTokens: MigrationToken[] = [];
+
+    if (migrateERC20Token1) {
+      migrationTokens.push({
         token: erc20Token1.address,
         amount: balanceERCToken1,
-      },
-      {
+      });
+    }
+    if (migrateERC20Token2) {
+      migrationTokens.push({
         token: erc20Token2.address,
         amount: balanceERCToken2,
-      },
-    ])
-    .transferENSNode(ensName)
-    .encodeTransactionRequests(archanovaAccountDeviceSignature);
+      });
+    }
+
+    migrator.transferERC20Tokens(migrationTokens);
+  }
+
+  if (migrateENSName) {
+    migrator.transferENSNode(ensName);
+  }
+
+  const txRequests = migrator.encodeTransactionRequests(
+    archanovaAccountDeviceSignature,
+  );
 
   let txRequestIndex = 0;
 

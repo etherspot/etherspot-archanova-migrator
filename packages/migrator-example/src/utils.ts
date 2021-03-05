@@ -51,19 +51,23 @@ async function logAccount(
   archanovaAccount: ArchanovaAccount,
   account: Account,
 ): Promise<void> {
-  const { ensName, ensNameHash } = archanovaAccount;
   const { address } = account;
-  const balanceWei = await provider.getBalance(address);
-  const balanceERC20Token1 = await erc20Token1.balanceOf(address);
-  const balanceERC20Token2 = await erc20Token2.balanceOf(address);
-  const ensOwner = await ensRegistry.owner(ensNameHash);
+  const { ensName, ensNameHash } = archanovaAccount;
 
   console.log(`  ${name} account`);
   console.log('  -----------------');
   console.log('  address:', address);
+
+  const balanceWei = await provider.getBalance(address);
   console.log('  balance (wei):', balanceWei.toString());
+
+  const balanceERC20Token1 = await erc20Token1.balanceOf(address);
   console.log('  balance (ERC20 token #1):', balanceERC20Token1.toString());
+
+  const balanceERC20Token2 = await erc20Token2.balanceOf(address);
   console.log('  balance (ERC20 token #2):', balanceERC20Token2.toString());
+
+  const ensOwner = await ensRegistry.owner(ensNameHash);
   console.log('  ensName:', ensOwner === address ? ensName : '-');
 }
 
