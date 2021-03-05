@@ -11,6 +11,7 @@
     "@etherspot/archanova-contracts-migrator": "0.1.0",
     "@etherspot/archanova-contracts-platform": "0.1.0",
     "@etherspot/archanova-migrator": "0.1.0",
+    "@etherspot/contracts": "1.0.0",
     "@types/node": "13.9.2",
     "ethers": "5.0.8",
     "ts-node": "8.10.2",
