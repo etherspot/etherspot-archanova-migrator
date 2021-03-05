@@ -19,6 +19,15 @@ async function main(): Promise<void> {
     migrateENSName,
   } = config;
 
+  if (
+    !migrateBalance &&
+    !migrateERC20Token1 &&
+    !migrateERC20Token2 &&
+    !migrateENSName
+  ) {
+    return;
+  }
+
   const archanovaAccount = await createArchanovaAccount();
   const etherspotAccount = createEtherspotAccount();
 
