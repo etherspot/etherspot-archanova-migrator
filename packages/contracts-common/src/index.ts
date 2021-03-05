@@ -7,7 +7,7 @@ import './build-dist';
 import './typings';
 import './config';
 
-export * from './constants';
+export * from './network';
 export * from './interfaces';
-export * from './utils';
+
 export { DeployFunction } from 'hardhat-deploy/types';

@@ -2,8 +2,7 @@ import { task } from 'hardhat/config';
 import { readdir, readJSON, writeFile, pathExists, mkdirp } from 'fs-extra';
 import { utils } from 'ethers';
 import { resolve, join } from 'path';
-import { NetworkNames } from '../constants';
-import { getNetworkChainId } from '../utils';
+import { NetworkNames, getNetworkChainId } from '../network';
 import templates from './templates';
 
 const TASK_BUILD_DIST = 'build-dist';

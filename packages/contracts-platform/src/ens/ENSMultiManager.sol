@@ -8,6 +8,8 @@ import "./AbstractENSAddrResolver.sol";
  * @title ENS Multi Manager
  */
 contract ENSMultiManager is AbstractENSAddrResolver {
+  event DebugAddr(address value);
+  event DebugBytes32(bytes32 value);
 
   event EnsRootNodeAdded(bytes32 rootNode, address owner);
   event EnsRootNodeVerified(bytes32 rootNode);

@@ -36,9 +36,33 @@ const config: HardhatUserConfig = {
     ),
   },
   solidity: {
-    version: '0.5.17',
-    settings: {
-      evmVersion: 'istanbul',
+    compilers: [
+      {
+        version: '0.5.17',
+        settings: {
+          evmVersion: 'istanbul',
+        },
+      },
+      {
+        version: '0.6.12',
+        settings: {
+          evmVersion: 'istanbul',
+          metadata: {
+            bytecodeHash: 'none',
+          },
+        },
+      },
+    ],
+  },
+  external: {
+    contracts: [
+      {
+        artifacts: 'node_modules/@etherspot/contracts/artifacts',
+      },
+    ],
+    deployments: {
+      localA: ['node_modules/@etherspot/contracts/deployments/localA'],
+      localB: ['node_modules/@etherspot/contracts/deployments/localB'],
     },
   },
   knownContracts,

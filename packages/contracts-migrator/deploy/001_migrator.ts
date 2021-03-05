@@ -1,12 +1,8 @@
 import { DeployFunction } from '@etherspot/archanova-contracts-common';
-import { ContractNames, getContractAddress } from '@etherspot/contracts';
 
 const func: DeployFunction = async hre => {
   const {
-    deployments: { deploy, execute },
-    network: {
-      config: { chainId },
-    },
+    deployments: { deploy, get, read, execute },
     getNamedAccounts,
   } = hre;
   const { from } = await getNamedAccounts();
@@ -16,16 +12,21 @@ const func: DeployFunction = async hre => {
     log: true,
   });
 
-  await execute(
-    'ArchanovaMigrator',
-    {
-      from,
-      log: true,
-    },
-    'initialize',
-    getContractAddress(ContractNames.ENSController, chainId),
-    getContractAddress(ContractNames.ENSRegistry, chainId),
-  );
+  if (!(await read('ArchanovaMigrator', 'isInitialized'))) {
+    const ensController = await get('ENSController');
+    const ensRegistry = await get('ENSRegistry');
+
+    await execute(
+      'ArchanovaMigrator',
+      {
+        from,
+        log: true,
+      },
+      'initialize',
+      ensController.address,
+      ensRegistry.address,
+    );
+  }
 };
 
 module.exports = func;
