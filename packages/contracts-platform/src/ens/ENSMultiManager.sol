@@ -105,7 +105,20 @@ contract ENSMultiManager is AbstractENSAddrResolver {
 
     ensNodeAddresses[_node] = _addr;
 
-    ens.setSubnodeOwner(_rootNode, _label, address(this));
+    bytes memory data = abi.encodeWithSelector(
+      ens.setSubnodeOwner.selector,
+      _rootNode,
+      _label,
+      address(this)
+    );
+
+    (bool _succeeded, ) = address(ens).call(data);
+
+    require(
+      _succeeded,
+      "Reverted ens.setSubnodeOwner"
+    );
+
     ens.setResolver(_node, address(this));
     ens.setOwner(_node, _addr);
   }
