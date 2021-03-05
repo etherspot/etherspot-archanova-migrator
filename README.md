@@ -19,7 +19,7 @@ $ npm run bootstrap
 
 1. Start [local infra](https://github.com/etherspot/etherspot-infra)
 2. Setup envs
-   ```base
+   ```bash
    export LOCAL_A_PROVIDER_PRIVATE_KEY=0x... # use infra deployer private key
    export LOCAL_A_PROVIDER_ENDPOINT=http://localhost:8545
    ```
