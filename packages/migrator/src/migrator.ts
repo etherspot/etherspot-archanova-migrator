@@ -12,8 +12,8 @@ import {
   ArchanovaAccountTransactionArgs,
   TransactionRequest,
 } from './interfaces';
-import { MigratorException } from './migrator.exception';
 import { isAddress, prepareTokensArgs } from './utils';
+import { MigratorException } from './migrator.exception';
 
 export class Migrator {
   readonly migrationMessage: Uint8Array;

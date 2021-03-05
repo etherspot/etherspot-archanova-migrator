@@ -14,6 +14,7 @@ async function main(): Promise<void> {
   const archanovaAccount = await createArchanovaAccount();
   const etherspotAccount = createEtherspotAccount();
 
+  // top-up account device account
   await topUpAccount(archanovaAccount.device, '1');
 
   const balanceWei = await topUpAccount(archanovaAccount, '20');
@@ -76,7 +77,7 @@ async function main(): Promise<void> {
     const { gasUsed } = await tx.wait();
 
     logMessage(
-      `#${++txRequestIndex} Transaction request gas limit:`,
+      `#${++txRequestIndex} Transaction request gas usage:`,
       gasUsed.toString(),
     );
   }
