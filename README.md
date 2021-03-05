@@ -45,7 +45,7 @@ $ npm run bootstrap
    $ npm run migrator-example:start
    ```
 
-   **Example output**
+   Output
    ```
    * State before migration
    
@@ -87,7 +87,7 @@ $ npm run bootstrap
      balance (ERC20 token #1): 12223000000000000
      balance (ERC20 token #2): 2140
      ensName: account1614959677.archanova-v2
-```
+   ```
 
 ## License
 
