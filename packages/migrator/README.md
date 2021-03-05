@@ -1,5 +1,7 @@
 # ETHERspot archanova migrator
 
+[![NPM version][npm-image]][npm-url]
+
 ## Installation
 
 ```bash
@@ -59,3 +61,6 @@ migrator.encodeTransactionRequests(archanovaAccountDeviceSignature);
 ## License
 
 MIT
+
+[npm-image]: https://badge.fury.io/js/%40etherspot%2Farchanova-migrator.svg
+[npm-url]: https://npmjs.org/package/@etherspot/archanova-migrator
