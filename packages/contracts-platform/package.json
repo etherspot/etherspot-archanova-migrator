@@ -1,0 +1,32 @@
+{
+  "name": "@etherspot/archanova-contracts-platform",
+  "version": "0.1.0",
+  "description": "ETHERspot archanova platform contracts",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "reset": "rimraf ./.hardhat && rimraf ./artifacts && rimraf ./deployments",
+    "compile": "hardhat compile",
+    "build": "npm run build:dist",
+    "build:dist": "hardhat build-dist",
+    "deploy:localA": "hardhat deploy --network localA",
+    "deploy:localB": "hardhat deploy --network localB"
+  },
+  "dependencies": {
+    "@ensdomains/ens": "0.4.0",
+    "openzeppelin-solidity": "2.1.2",
+    "solidity-bytes-utils": "0.0.8"
+  },
+  "devDependencies": {
+    "@etherspot/archanova-contracts-common": "0.1.0",
+    "@etherspot/contracts": "1.0.0",
+    "@types/mocha": "7.0.2",
+    "@types/node": "13.9.2",
+    "ethers": "5.0.24",
+    "hardhat": "2.1.1",
+    "rimraf": "3.0.2",
+    "ts-node": "8.10.2",
+    "typescript": "3.9.7"
+  }
+}

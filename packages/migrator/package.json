@@ -1,0 +1,51 @@
+{
+  "name": "@etherspot/archanova-migrator",
+  "version": "0.1.0",
+  "description": "ETHERspot archanova migrator",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "compile": "tsc",
+    "compile-watch": "tsc --watch",
+    "prebuild": "npm run clean",
+    "build": "npm run compile",
+    "test": "npm run test:unit",
+    "test:unit": "jest",
+    "test:unit-watch": "jest --watch"
+  },
+  "dependencies": {
+    "@etherspot/archanova-contracts-migrator": "0.1.0"
+  },
+  "devDependencies": {
+    "@etherspot/archanova-contracts-common": "0.1.0",
+    "@etherspot/contracts": "1.0.0",
+    "@types/jest": "25.2.3",
+    "@types/node": "13.9.2",
+    "ethers": "5.0.8",
+    "fs-extra": "9.0.0",
+    "jest": "25.5.4",
+    "rimraf": "3.0.2",
+    "ts-jest": "25.5.1",
+    "ts-node": "8.10.2",
+    "typescript": "3.9.7"
+  },
+  "peerDependencies": {
+    "ethers": "^5.0.8"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "json",
+      "js",
+      "ts"
+    ],
+    "rootDir": ".",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node"
+  }
+}
