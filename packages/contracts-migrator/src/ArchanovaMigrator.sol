@@ -18,6 +18,7 @@ contract ArchanovaMigrator is Initializable {
   using SignatureLib for bytes32;
 
   bytes32 constant private MIGRATION_MESSAGE_PREFIX = keccak256(abi.encodePacked("etherspot <> archanova migration"));
+  bytes4 constant private ENS_CONTROLLER_SET_ADDR_SELECTOR = bytes4(keccak256(abi.encodePacked("setAddr(bytes32,address)")));
 
   ENSController public ensController;
   ENSRegistry public ensRegistry;
@@ -360,7 +361,7 @@ contract ArchanovaMigrator is Initializable {
       payable(address(ensController)),
       0,
       abi.encodeWithSelector(
-        ensController.setAddr.selector,
+        ENS_CONTROLLER_SET_ADDR_SELECTOR,
         ensNode,
         etherspotAccount
       )
