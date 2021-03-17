@@ -20,9 +20,9 @@ async function main(): Promise<void> {
   await logger.log(
     'transfer balance', //
     'transfer ENS',
-    'transfer ERC20 count',
-    '#1 tx gas',
-    '#2 tx gas',
+    'transfer ERC20 (count)',
+    '#1 tx (gas used)',
+    '#2 tx (gas used)',
   );
 
   await logger.log(

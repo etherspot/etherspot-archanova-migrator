@@ -24,7 +24,7 @@
     "contracts-platform:deploy:localB": "lerna run --no-prefix --stream --scope @etherspot/archanova-contracts-platform deploy:localB",
     "migrator:build": "lerna run --no-prefix --stream --scope @etherspot/archanova-migrator build",
     "migrator:compile-watch": "lerna run --no-prefix --stream --scope @etherspot/archanova-migrator compile-watch",
-    "migrator-benchmark:start": "lerna run --no-prefix --scope @etherspot/archanova-migrator-benchmark start",
+    "migrator:benchmark": "lerna run --no-prefix --scope @etherspot/archanova-migrator-benchmark start",
     "reset": "lerna run --no-prefix --stream reset",
     "deploy:localA": "lerna run --no-prefix --stream deploy:localA",
     "deploy:localB": "lerna run --no-prefix --stream deploy:localB",
