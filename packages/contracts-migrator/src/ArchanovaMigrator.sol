@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-import "@etherspot/contracts/src/common/libs/SignatureLib.sol";
+import "@etherspot/contracts/src/common/libs/ECDSALib.sol";
 import "@etherspot/contracts/src/common/lifecycle/Initializable.sol";
 import "@etherspot/contracts/src/common/token/ERC20Token.sol";
 import "@etherspot/contracts/src/ens/ENSController.sol";
@@ -15,7 +15,7 @@ import "./ArchanovaAccount.sol";
  * @author Stanisław Głogowski <stan@pillarproject.io>
  */
 contract ArchanovaMigrator is Initializable {
-  using SignatureLib for bytes32;
+  using ECDSALib for bytes32;
 
   bytes32 constant private MIGRATION_MESSAGE_PREFIX = keccak256(abi.encodePacked("etherspot <> archanova migration"));
   bytes4 constant private ENS_CONTROLLER_SET_ADDR_SELECTOR = bytes4(keccak256(abi.encodePacked("setAddr(bytes32,address)")));
