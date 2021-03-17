@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@etherspot/archanova-contracts-common": "0.1.0",
-    "@etherspot/contracts": "1.1.0",
+    "@etherspot/contracts": "1.2.0",
     "@types/mocha": "7.0.2",
     "@types/node": "13.9.2",
     "ethers": "5.0.24",

@@ -1,4 +1,4 @@
-# ETHERspot archanova migrator example
+# ETHERspot archanova migrator benchmark
 
 ## Installation
 
