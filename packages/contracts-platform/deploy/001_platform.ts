@@ -24,11 +24,6 @@ const func: DeployFunction = async hre => {
     args: [guardian.address, 5],
   });
 
-  await deploy('ExampleToken', {
-    from,
-    log: true,
-  });
-
   const ensRegistry = await get('ENSRegistry');
 
   for (const version of [1, 2]) {
