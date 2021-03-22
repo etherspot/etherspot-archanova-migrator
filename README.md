@@ -21,7 +21,7 @@ $ npm run lerna:bootstrap
 
 ### Usage
 
-1. Start [local infra](https://github.com/etherspot/etherspot-infra)
+1. Start [local infra](https://github.com/etherspot/etherspot-infra#develop-env) on develop mode
 2. Setup envs
    ```bash
    export LOCAL_A_PROVIDER_PRIVATE_KEY=0x...                # use infra account deployer private key
