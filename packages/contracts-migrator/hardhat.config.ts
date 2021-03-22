@@ -63,8 +63,21 @@ const config: HardhatUserConfig = {
       },
     ],
     deployments: {
-      localA: ['node_modules/@etherspot/contracts/deployments/localA'],
-      localB: ['node_modules/@etherspot/contracts/deployments/localB'],
+      ...[
+        NetworkNames.Mainnet,
+        NetworkNames.Ropsten,
+        NetworkNames.Kovan,
+        NetworkNames.LocalA,
+        NetworkNames.LocalB,
+      ].reduce(
+        (result, network) => ({
+          ...result,
+          [network]: [
+            `node_modules/@etherspot/contracts/deployments/${network}`,
+          ],
+        }),
+        {},
+      ),
     },
   },
 };
