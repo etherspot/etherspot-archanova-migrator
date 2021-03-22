@@ -1,7 +1,6 @@
 import * as contractsPlatform from '@etherspot/archanova-contracts-platform';
 import * as contractsEtherspot from '@etherspot/contracts';
-import { TransactionRequest } from '@ethersproject/abstract-provider';
-import { BigNumber, BigNumberish, Contract, ContractTransaction } from 'ethers';
+import { BigNumberish, Contract, ContractTransaction } from 'ethers';
 import { sender, chainId } from './constants';
 
 export const accountProvider: Contract &
@@ -38,36 +37,32 @@ export const ensRegistry: Contract &
   sender,
 );
 
-export const erc20Token1: Contract &
+export const erc20Token: Contract &
   Partial<{
-    balanceOf(owner: string): Promise<BigNumber>;
-    depositTo(
-      to: string,
-      options?: TransactionRequest,
-    ): Promise<ContractTransaction>;
+    mint(amount: BigNumberish): Promise<ContractTransaction>;
+    mintTo(to: string, amount: BigNumberish): Promise<ContractTransaction>;
   }> = new Contract(
-  contractsEtherspot.getContractAddress(
-    contractsEtherspot.ContractNames.WrappedWeiToken,
+  contractsPlatform.getContractAddress(
+    contractsPlatform.ContractNames.ERC20ExampleToken,
     chainId,
   ),
-  contractsEtherspot.getContractAbi(
-    contractsEtherspot.ContractNames.WrappedWeiToken,
+  contractsPlatform.getContractAbi(
+    contractsPlatform.ContractNames.ERC20ExampleToken,
   ),
   sender,
 );
 
-export const erc20Token2: Contract &
+export const erc721Token: Contract &
   Partial<{
-    balanceOf(owner: string): Promise<BigNumber>;
-    transfer(to: string, value: BigNumberish): Promise<ContractTransaction>;
     mint(amount: BigNumberish): Promise<ContractTransaction>;
+    mintTo(to: string, amount: BigNumberish): Promise<ContractTransaction>;
   }> = new Contract(
   contractsPlatform.getContractAddress(
-    contractsPlatform.ContractNames.ExampleToken,
+    contractsPlatform.ContractNames.ERC721ExampleToken,
     chainId,
   ),
   contractsPlatform.getContractAbi(
-    contractsPlatform.ContractNames.ExampleToken,
+    contractsPlatform.ContractNames.ERC721ExampleToken,
   ),
   sender,
 );
