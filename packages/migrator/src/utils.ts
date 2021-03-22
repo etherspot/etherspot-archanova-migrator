@@ -1,5 +1,9 @@
 import { utils } from 'ethers';
-import { MigrationToken } from './interfaces';
+import {
+  MigrationERC20Token,
+  MigrationERC721Token,
+  MigrationToken,
+} from './interfaces';
 
 export function isAddress(value: string): boolean {
   let result = false;
@@ -16,12 +20,15 @@ export function isAddress(value: string): boolean {
   return result;
 }
 
-export function prepareTokensArgs(tokens: MigrationToken[]): any[] {
+export function prepareTokensArgs(items: MigrationToken[]): any[] {
   const result: any[][] = [[], []];
 
-  for (const { token, amount } of tokens) {
+  for (const item of items) {
+    const { token, amount } = item as MigrationERC20Token;
+    const { id } = item as MigrationERC721Token;
+
     result[0].push(token);
-    result[1].push(amount);
+    result[1].push(amount || id);
   }
 
   return result;

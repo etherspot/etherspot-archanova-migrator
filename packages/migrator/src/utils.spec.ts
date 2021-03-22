@@ -1,5 +1,5 @@
 import { isAddress, prepareTokensArgs } from './utils';
-import { MigrationToken } from './interfaces';
+import { MigrationERC20Token } from './interfaces';
 
 describe('utils', () => {
   test('isAddress()', () => {
@@ -15,7 +15,7 @@ describe('utils', () => {
   });
 
   test('prepareTokensArgs()', () => {
-    const token: MigrationToken[] = [
+    const token: MigrationERC20Token[] = [
       {
         token: 'A',
         amount: 1,
