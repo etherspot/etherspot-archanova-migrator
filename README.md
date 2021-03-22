@@ -19,7 +19,7 @@ $ npm run lerna:bootstrap
 
 ## Benchmark
 
-## Usage
+### Usage
 
 1. Start [local infra](https://github.com/etherspot/etherspot-infra)
 2. Setup envs
