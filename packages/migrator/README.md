@@ -37,7 +37,17 @@ migrator = migrator
       amount: '0x02',
     },
   ])
-  .transferENSNode(utils.namehash('example.eth'))
+  .transferERC721Tokens([
+    { 
+      token: '0x...', 
+      id: 1,
+    },
+    {
+      token: '0x...',
+      id: '0x02',
+    },
+  ])
+  .transferENSName(utils.namehash('example.eth'))
 
 // personal sign `migrator.migrationMessage` with archanova account owner device
 const archanovaAccountDeviceSignature = await archanovaAccountDevice.signMessage(migrator.migrationMessage);

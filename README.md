@@ -19,25 +19,21 @@ $ npm run lerna:bootstrap
 
 ## Benchmark
 
-## Usage
+### Usage
 
-1. Start [local infra](https://github.com/etherspot/etherspot-infra)
+1. Start [local infra](https://github.com/etherspot/etherspot-infra#develop-env) on develop mode
 2. Setup envs
    ```bash
-   export LOCAL_A_PROVIDER_PRIVATE_KEY=0x... # use infra account deployer private key
+   export LOCAL_A_PROVIDER_PRIVATE_KEY=0x...                # use infra account deployer private key
    export LOCAL_A_PROVIDER_ENDPOINT=http://localhost:8545
-   export BENCHMARK_ERC20_TOKENS_COUNT=25
+   export BENCHMARK_ERC20_TOKENS_COUNT=5                    # default 5 
+   export BENCHMARK_ERC721_TOKENS_COUNT=5                   # default 5 
    ```
-3. Deploy contracts to `localnets`
-   ```bash
-   $ npm run deploy:localA
-   $ npm run deploy:localB
-   ```
-4. Build packages
+3. Build packages
    ```bash
    $ npm run build
    ```
-5. Run benchmark
+4. Run benchmark
    ```bash
    $ npm run migrator:benchmark
    ```

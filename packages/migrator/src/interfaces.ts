@@ -9,14 +9,24 @@ export interface MigratorOptions {
 export interface Migration {
   addAccountDevice?: boolean;
   transferBalance?: BigNumberish;
-  transferERC20Tokens?: MigrationToken[];
+  transferERC20Tokens?: MigrationERC20Token[];
+  transferERC721Tokens?: MigrationERC721Token[];
   transferENSNode?: string;
 }
 
-export interface MigrationToken {
+export interface MigrationCommonToken {
   token: string;
+}
+
+export interface MigrationERC20Token extends MigrationCommonToken {
   amount: BigNumberish;
 }
+
+export interface MigrationERC721Token extends MigrationCommonToken {
+  id: BigNumberish;
+}
+
+export type MigrationToken = MigrationERC20Token | MigrationERC721Token;
 
 export type ArchanovaAccountTransactionArgs =
   | [string, any, string]

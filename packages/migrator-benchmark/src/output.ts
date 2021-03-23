@@ -1,11 +1,15 @@
 import { pathExists, unlink, appendFile } from 'fs-extra';
 
-export class Logger {
-  constructor(private filePath: string) {
+export class Output {
+  constructor(private filePath: string, private enabled = true) {
     //
   }
 
   async reset(): Promise<void> {
+    if (!this.enabled) {
+      return;
+    }
+
     console.clear();
 
     if (await pathExists(this.filePath)) {
@@ -22,7 +26,11 @@ export class Logger {
     });
   }
 
-  async log(...args: any[]): Promise<void> {
+  async write(...args: any[]): Promise<void> {
+    if (!this.enabled) {
+      return;
+    }
+
     const line = `| ${args
       .map(arg => {
         let result: string;
@@ -41,7 +49,7 @@ export class Logger {
             break;
 
           default:
-            result = `${arg}`;
+            result = arg instanceof Error ? '👎' : `${arg}`;
         }
 
         return result;

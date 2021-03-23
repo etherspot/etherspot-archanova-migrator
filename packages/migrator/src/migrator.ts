@@ -8,7 +8,8 @@ import { MIGRATION_MESSAGE_PREFIX } from './constants';
 import {
   MigratorOptions,
   Migration,
-  MigrationToken,
+  MigrationERC20Token,
+  MigrationERC721Token,
   ArchanovaAccountTransactionArgs,
   TransactionRequest,
 } from './interfaces';
@@ -46,19 +47,19 @@ export class Migrator {
     );
 
     if (!this.migratorAddress) {
-      throw new MigratorException('unsupported network', {
+      throw new MigratorException('Unsupported network', {
         chainId,
       });
     }
 
     if (!isAddress(archanovaAccount)) {
-      throw new MigratorException('invalid archanova account address', {
+      throw new MigratorException('Invalid archanova account address', {
         archanovaAccount,
       });
     }
 
     if (!isAddress(etherspotAccount)) {
-      throw new MigratorException('invalid etherspot account address', {
+      throw new MigratorException('Invalid etherspot account address', {
         etherspotAccount,
       });
     }
@@ -82,22 +83,22 @@ export class Migrator {
     return this;
   }
 
-  transferBalance(value: BigNumberish): this {
-    value = BigNumber.from(value || 0);
+  transferBalance(balance: BigNumberish): this {
+    balance = BigNumber.from(balance || 0);
 
-    if (value.eq(0)) {
-      throw new MigratorException('value should be greater then 0', {
-        value,
+    if (balance.eq(0)) {
+      throw new MigratorException('Balance should be greater then 0', {
+        balance,
       });
     }
 
-    this.migration.transferBalance = value;
+    this.migration.transferBalance = balance;
     return this;
   }
 
-  transferERC20Tokens(tokens: MigrationToken[]): this {
+  transferERC20Tokens(tokens: MigrationERC20Token[]): this {
     if (!Array.isArray(tokens) || !tokens.length) {
-      throw new MigratorException('invalid tokens list', {
+      throw new MigratorException('Invalid ERC20 tokens list', {
         tokens,
       });
     }
@@ -107,7 +108,7 @@ export class Migrator {
 
       if (amount.eq(0)) {
         throw new MigratorException(
-          'amount of token should be greater then 0',
+          'Amount of ERC20 token should be greater then 0',
           {
             token,
             amount,
@@ -116,7 +117,7 @@ export class Migrator {
       }
 
       if (!isAddress(token)) {
-        throw new MigratorException('invalid token address', {
+        throw new MigratorException('Invalid ERC20 token address', {
           token,
         });
       }
@@ -130,11 +131,43 @@ export class Migrator {
     return this;
   }
 
-  transferENSNode(ensName: string): this {
+  transferERC721Tokens(tokens: MigrationERC721Token[]): this {
+    if (!Array.isArray(tokens) || !tokens.length) {
+      throw new MigratorException('Invalid ERC721 tokens list', {
+        tokens,
+      });
+    }
+
+    this.migration.transferERC721Tokens = tokens.map(({ token, id }) => {
+      id = BigNumber.from(id || 0);
+
+      if (id.eq(0)) {
+        throw new MigratorException('Invalid ERC721 token id', {
+          token,
+          id,
+        });
+      }
+
+      if (!isAddress(token)) {
+        throw new MigratorException('Invalid ERC721 token address', {
+          token,
+        });
+      }
+
+      return {
+        token,
+        id,
+      };
+    });
+
+    return this;
+  }
+
+  transferENSName(ensName: string): this {
     const ensNode = utils.namehash(ensName);
 
     if (!ensNode) {
-      throw new MigratorException('invalid ens name', {
+      throw new MigratorException('Invalid ENS name', {
         ensName,
         ensNode,
       });
@@ -154,11 +187,17 @@ export class Migrator {
       addAccountDevice,
       transferBalance,
       transferERC20Tokens,
+      transferERC721Tokens,
       transferENSNode,
     } = this.migration;
 
-    if (!transferBalance && !transferERC20Tokens && !transferENSNode) {
-      throw new MigratorException('no transaction requests to encode');
+    if (
+      !transferBalance &&
+      !transferERC20Tokens &&
+      !transferERC721Tokens &&
+      !transferENSNode
+    ) {
+      throw new MigratorException('No transaction requests to encode');
     }
 
     const { archanovaAccount, etherspotAccount } = this.options;
@@ -175,75 +214,37 @@ export class Migrator {
       });
     }
 
-    let data: string;
+    const functionOpNames: string[] = [];
+    const functionOpArgs: unknown[] = [];
 
-    if (transferBalance && !transferERC20Tokens && !transferENSNode) {
-      data = this.migratorInterface.encodeFunctionData('transferBalance', [
-        archanovaAccount,
-        etherspotAccount,
-        transferBalance,
-        archanovaAccountDeviceSignature,
-      ]);
-    } else if (!transferBalance && transferERC20Tokens && !transferENSNode) {
-      data = this.migratorInterface.encodeFunctionData('transferERC20Tokens', [
-        archanovaAccount,
-        etherspotAccount,
-        ...prepareTokensArgs(transferERC20Tokens),
-        archanovaAccountDeviceSignature,
-      ]);
-    } else if (transferBalance && transferERC20Tokens && !transferENSNode) {
-      data = this.migratorInterface.encodeFunctionData(
-        'transferBalanceAndERC20Tokens',
-        [
-          archanovaAccount,
-          etherspotAccount,
-          transferBalance,
-          ...prepareTokensArgs(transferERC20Tokens),
-          archanovaAccountDeviceSignature,
-        ],
-      );
-    } else if (!transferBalance && !transferERC20Tokens && transferENSNode) {
-      data = this.migratorInterface.encodeFunctionData('transferENSNode', [
-        archanovaAccount,
-        etherspotAccount,
-        transferENSNode,
-        archanovaAccountDeviceSignature,
-      ]);
-    } else if (transferBalance && !transferERC20Tokens && transferENSNode) {
-      data = this.migratorInterface.encodeFunctionData(
-        'transferBalanceAndENSNode',
-        [
-          archanovaAccount,
-          etherspotAccount,
-          transferBalance,
-          transferENSNode,
-          archanovaAccountDeviceSignature,
-        ],
-      );
-    } else if (!transferBalance && transferERC20Tokens && transferENSNode) {
-      data = this.migratorInterface.encodeFunctionData(
-        'transferERC20TokensAndENSNode',
-        [
-          archanovaAccount,
-          etherspotAccount,
-          ...prepareTokensArgs(transferERC20Tokens),
-          transferENSNode,
-          archanovaAccountDeviceSignature,
-        ],
-      );
-    } else if (transferBalance && transferERC20Tokens && transferENSNode) {
-      data = this.migratorInterface.encodeFunctionData(
-        'transferBalanceAndERC20TokensAndENSNode',
-        [
-          archanovaAccount,
-          etherspotAccount,
-          transferBalance,
-          ...prepareTokensArgs(transferERC20Tokens),
-          transferENSNode,
-          archanovaAccountDeviceSignature,
-        ],
-      );
+    if (transferBalance) {
+      functionOpNames.push('Balance');
+      functionOpArgs.push(transferBalance);
     }
+
+    if (transferERC20Tokens) {
+      functionOpNames.push('ERC20Tokens');
+      functionOpArgs.push(...prepareTokensArgs(transferERC20Tokens));
+    }
+
+    if (transferERC721Tokens) {
+      functionOpNames.push('ERC721Tokens');
+      functionOpArgs.push(...prepareTokensArgs(transferERC721Tokens));
+    }
+
+    if (transferENSNode) {
+      functionOpNames.push('ENSNode');
+      functionOpArgs.push(transferENSNode);
+    }
+
+    const functionName = `transfer${functionOpNames.join('And')}`;
+
+    const data = this.migratorInterface.encodeFunctionData(functionName, [
+      archanovaAccount,
+      etherspotAccount,
+      ...functionOpArgs,
+      archanovaAccountDeviceSignature,
+    ]);
 
     result.push({
       to: this.migratorAddress,
@@ -264,7 +265,7 @@ export class Migrator {
       );
     } catch (err) {
       throw new MigratorException(
-        'no archanova account transaction args to encode',
+        'No archanova account transaction args to encode',
       );
     }
 

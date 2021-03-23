@@ -1,8 +1,12 @@
-import { DeployFunction } from '@etherspot/archanova-contracts-common';
+import {
+  DeployFunction,
+  NetworkNames,
+} from '@etherspot/archanova-contracts-common';
 
 const func: DeployFunction = async hre => {
   const {
     deployments: { deploy, get, read, execute },
+    network,
     getNamedAccounts,
   } = hre;
   const { from } = await getNamedAccounts();
@@ -14,7 +18,14 @@ const func: DeployFunction = async hre => {
 
   if (!(await read('ArchanovaMigrator', 'isInitialized'))) {
     const ensController = await get('ENSController');
-    const ensRegistry = await get('ENSRegistry');
+    let ensRegistryAddress: string;
+
+    if (network.name === NetworkNames.Mainnet) {
+      // see: https://docs.ens.domains/ens-deployments
+      ensRegistryAddress = '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e';
+    } else {
+      ({ address: ensRegistryAddress } = await get('ENSRegistry'));
+    }
 
     await execute(
       'ArchanovaMigrator',
@@ -24,7 +35,7 @@ const func: DeployFunction = async hre => {
       },
       'initialize',
       ensController.address,
-      ensRegistry.address,
+      ensRegistryAddress,
     );
   }
 };

@@ -1,9 +1,14 @@
-import { BigNumber, BigNumberish, Contract, utils, Wallet } from 'ethers';
-import { accountProvider, erc20Token1, erc20Token2 } from './contracts';
+import { BigNumber, BigNumberish, utils, Wallet } from 'ethers';
+import {
+  MigrationERC20Token,
+  MigrationERC721Token,
+} from '@etherspot/archanova-migrator';
+import { accountProvider, erc20Token, erc721Token } from './contracts';
 import { provider, ensRootName, ensRootNameHash, sender } from './constants';
 import { Account, ArchanovaAccount, EtherspotAccount } from './interfaces';
 
 let accountCounter = Date.now();
+let erc721TokenIdCounter = Date.now();
 
 export async function randomArchanovaAccount(): Promise<ArchanovaAccount> {
   const id = ++accountCounter;
@@ -14,7 +19,7 @@ export async function randomArchanovaAccount(): Promise<ArchanovaAccount> {
   const ensNameHash = utils.namehash(ensName);
 
   const tx = await accountProvider.unsafeCreateAccount(
-    Date.now(),
+    id,
     device.address,
     ensLabelHash,
     ensRootNameHash,
@@ -22,6 +27,7 @@ export async function randomArchanovaAccount(): Promise<ArchanovaAccount> {
   );
 
   const { events } = await tx.wait();
+
   const {
     args: { account: address },
   } = events.find(({ event }) => event === 'AccountCreated');
@@ -43,53 +49,56 @@ export function randomEtherspotAccount(): EtherspotAccount {
   };
 }
 
-export function randomERC20Token(): Contract {
-  return Math.random() < 0.5 ? erc20Token1 : erc20Token2;
-}
-
 export function randomAmount(): number {
   return Math.floor(Math.random() * 10000000);
 }
 
 export async function topUpAccount(
   account: Account,
-  value: BigNumberish,
-  token?: Contract,
+  value?: BigNumberish,
 ): Promise<BigNumber> {
+  if (!value) {
+    value = randomAmount();
+  }
+
   if (typeof value === 'string') {
     value = utils.parseEther(value);
   }
 
-  switch (token) {
-    case erc20Token1: {
-      const tx = await erc20Token1.depositTo(account.address, {
-        value,
-      });
+  const tx = await sender.sendTransaction({
+    to: account.address,
+    value,
+  });
 
-      await tx.wait();
-      break;
-    }
-
-    case erc20Token2: {
-      const tx = await erc20Token2.mint(value);
-      await tx.wait();
-
-      {
-        const tx = await erc20Token2.transfer(account.address, value);
-        await tx.wait();
-      }
-      break;
-    }
-
-    default: {
-      const tx = await sender.sendTransaction({
-        to: account.address,
-        value,
-      });
-
-      await tx.wait();
-    }
-  }
+  await tx.wait();
 
   return BigNumber.from(value);
+}
+
+export async function mintERC20Token(
+  account: Account,
+): Promise<MigrationERC20Token> {
+  const amount = randomAmount();
+
+  const tx = await erc20Token.mintTo(account.address, amount);
+  await tx.wait();
+
+  return {
+    token: erc20Token.address,
+    amount,
+  };
+}
+
+export async function mintERC721Token(
+  account: Account,
+): Promise<MigrationERC721Token> {
+  const id = ++erc721TokenIdCounter;
+
+  const tx = await erc721Token.mintTo(account.address, id);
+  await tx.wait();
+
+  return {
+    token: erc721Token.address,
+    id,
+  };
 }
