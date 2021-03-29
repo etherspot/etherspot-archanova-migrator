@@ -2,7 +2,7 @@
   "name": "root",
   "version": "0.0.0",
   "private": true,
-  "description": "ETHERspot archanova migrator",
+  "description": "Etherspot archanova migrator",
   "license": "MIT",
   "scripts": {
     "lerna:clean": "lerna clean --yes",

@@ -1,4 +1,4 @@
-# ETHERspot archanova migrator contracts
+# Etherspot archanova migrator contracts
 
 ## Installation
 

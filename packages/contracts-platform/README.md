@@ -1,4 +1,4 @@
-# ETHERspot archanova platform contracts
+# Etherspot archanova platform contracts
 
 ## Installation
 

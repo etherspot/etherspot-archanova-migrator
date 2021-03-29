@@ -1,4 +1,4 @@
-# ETHERspot archanova contracts common
+# Etherspot archanova contracts common
 
 ## Installation
 

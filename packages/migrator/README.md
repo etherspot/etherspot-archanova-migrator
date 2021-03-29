@@ -1,4 +1,4 @@
-# ETHERspot archanova migrator
+# Etherspot archanova migrator
 
 [![NPM version][npm-image]][npm-url]
 
