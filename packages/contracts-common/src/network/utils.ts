@@ -53,7 +53,7 @@ export function createConfigNetwork(
   defaultProvider?: 'infura' | string,
   defaultGasPrice?: number,
 ): HardhatUserConfig['networks'] {
-  const url = getProviderUrl(networkName);
+  const url = getProviderUrl(networkName, defaultProvider);
   const envPrefix = getNetworkEnvPrefix(networkName);
 
   let gasPrice =

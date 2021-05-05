@@ -1,6 +1,6 @@
 {
   "name": "@etherspot/archanova-contracts-common",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha.1",
   "description": "Etherspot archanova contracts common",
   "license": "MIT",
   "main": "./dist/index.js",
