@@ -21,11 +21,13 @@ let migrator = new Migrator({
   etherspotAccount: '0x...'
 });
 
-const archanovaAccountDevice = Wallet.createRandom();
+// put a private key that already has access to the account you want to migrate
+const privateKey = '0x...';
+const archanovaAccountDevice = new Wallet(privateKey);
 
 // each migration step is optional
 migrator = migrator
-  .addAccountDevice() // adds the migrator as an archanova account owner device
+  .addAccountDevice() // adds the migrator as an archanova account owner's device, pls check first if the device wasn't already added & connected/deployed
   .transferBalance(utils.parseEther('0.05'))
   .transferERC20Tokens([
     { 
