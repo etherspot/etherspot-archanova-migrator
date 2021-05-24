@@ -8,9 +8,9 @@
     "start": "ts-node ./src/main.ts"
   },
   "dependencies": {
-    "@etherspot/archanova-contracts-migrator": "1.0.0-alpha.1",
-    "@etherspot/archanova-contracts-platform": "1.0.0-alpha.1",
-    "@etherspot/archanova-migrator": "1.0.0-alpha.1",
+    "@etherspot/archanova-contracts-migrator": "1.0.0",
+    "@etherspot/archanova-contracts-platform": "1.0.0",
+    "@etherspot/archanova-migrator": "1.0.0",
     "@etherspot/contracts": "1.2.0",
     "@types/fs-extra": "8.1.0",
     "@types/node": "13.9.2",
