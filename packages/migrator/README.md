@@ -49,7 +49,7 @@ migrator = migrator
       id: '0x02',
     },
   ])
-  .transferENSName(utils.namehash('example.eth'))
+  .transferENSName('example.eth')
 
 // personal sign `migrator.migrationMessage` with archanova account owner device
 const archanovaAccountDeviceSignature = await archanovaAccountDevice.signMessage(migrator.migrationMessage);
