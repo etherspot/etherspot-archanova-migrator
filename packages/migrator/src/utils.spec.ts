@@ -1,5 +1,5 @@
-import { isAddress, prepareTokensArgs } from './utils';
-import { MigrationERC20Token } from './interfaces';
+import { isAddress, prepareERC20TokensArgs, prepareERC721TokensArgs } from './utils';
+import { MigrationERC20Token, MigrationERC721Token } from './interfaces';
 
 describe('utils', () => {
   test('isAddress()', () => {
@@ -14,7 +14,7 @@ describe('utils', () => {
     expect(isAddress('test')).toBeFalsy();
   });
 
-  test('prepareTokensArgs()', () => {
+  test('prepareERC20TokensArgs()', () => {
     const token: MigrationERC20Token[] = [
       {
         token: 'A',
@@ -26,14 +26,41 @@ describe('utils', () => {
       },
     ];
 
-    expect(prepareTokensArgs([])).toStrictEqual([[], []]);
-    expect(prepareTokensArgs(token.slice(0, 1))).toStrictEqual([
+    expect(prepareERC20TokensArgs([])).toStrictEqual([[], []]);
+    expect(prepareERC20TokensArgs(token.slice(0, 1))).toStrictEqual([
       [token[0].token],
       [token[0].amount],
     ]);
-    expect(prepareTokensArgs(token)).toStrictEqual([
+    expect(prepareERC20TokensArgs(token)).toStrictEqual([
       [token[0].token, token[1].token],
       [token[0].amount, token[1].amount],
+    ]);
+  });
+
+  test('prepareERC721TokensArgs()', () => {
+    const token: MigrationERC721Token[] = [
+      {
+        token: 'A',
+        id: 1,
+        useLegacyTransferMethod: false,
+      },
+      {
+        token: 'B',
+        id: 2,
+        useLegacyTransferMethod: true,
+      },
+    ];
+
+    expect(prepareERC721TokensArgs([])).toStrictEqual([[], [], []]);
+    expect(prepareERC721TokensArgs(token.slice(0, 1))).toStrictEqual([
+      [token[0].token],
+      [token[0].id],
+      [token[0].useLegacyTransferMethod],
+    ]);
+    expect(prepareERC721TokensArgs(token)).toStrictEqual([
+      [token[0].token, token[1].token],
+      [token[0].id, token[1].id],
+      [token[0].useLegacyTransferMethod, token[1].useLegacyTransferMethod],
     ]);
   });
 });

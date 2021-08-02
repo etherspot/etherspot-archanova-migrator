@@ -66,7 +66,7 @@ async function main(): Promise<void> {
             const archanovaAccount = await randomArchanovaAccount();
             const etherspotAccount = randomEtherspotAccount();
 
-            let migrator = new Migrator({
+            const migrator = new Migrator({
               chainId,
               archanovaAccount: archanovaAccount.address,
               etherspotAccount: etherspotAccount.address,

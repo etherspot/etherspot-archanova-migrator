@@ -16,7 +16,7 @@
     "test:unit-watch": "jest --watch"
   },
   "dependencies": {
-    "@etherspot/archanova-contracts-migrator": "1.0.0"
+    "@etherspot/archanova-contracts-migrator": "2.0.0"
   },
   "devDependencies": {
     "@etherspot/archanova-contracts-common": "1.0.0",

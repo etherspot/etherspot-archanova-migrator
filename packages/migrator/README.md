@@ -47,6 +47,7 @@ migrator = migrator
     {
       token: '0x...',
       id: '0x02',
+      useLegacyTransferMethod: true,
     },
   ])
   .transferENSName('example.eth')
