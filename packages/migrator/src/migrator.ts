@@ -13,7 +13,7 @@ import {
   ArchanovaAccountTransactionArgs,
   TransactionRequest,
 } from './interfaces';
-import { isAddress, prepareTokensArgs } from './utils';
+import { isAddress, prepareERC20TokensArgs, prepareERC721TokensArgs } from './utils';
 import { MigratorException } from './migrator.exception';
 
 export class Migrator {
@@ -138,7 +138,7 @@ export class Migrator {
       });
     }
 
-    this.migration.transferERC721Tokens = tokens.map(({ token, id }) => {
+    this.migration.transferERC721Tokens = tokens.map(({ token, id, useLegacyTransferMethod = false }) => {
       id = BigNumber.from(id || 0);
 
       if (id.eq(0)) {
@@ -154,9 +154,16 @@ export class Migrator {
         });
       }
 
+      if (typeof useLegacyTransferMethod !== "boolean") {
+        throw new MigratorException('Invalid ERC721 useLegacyTransferMethod param', {
+          token,
+        });
+      }
+
       return {
         token,
         id,
+        useLegacyTransferMethod,
       };
     });
 
@@ -224,12 +231,12 @@ export class Migrator {
 
     if (transferERC20Tokens) {
       functionOpNames.push('ERC20Tokens');
-      functionOpArgs.push(...prepareTokensArgs(transferERC20Tokens));
+      functionOpArgs.push(...prepareERC20TokensArgs(transferERC20Tokens));
     }
 
     if (transferERC721Tokens) {
       functionOpNames.push('ERC721Tokens');
-      functionOpArgs.push(...prepareTokensArgs(transferERC721Tokens));
+      functionOpArgs.push(...prepareERC721TokensArgs(transferERC721Tokens));
     }
 
     if (transferENSNode) {
