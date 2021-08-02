@@ -17,7 +17,7 @@ extendConfig(config => {
 
   paths.artifacts = join(root, '.hardhat/artifacts');
   paths.cache = join(root, '.hardhat/cache');
-  paths.deploy = join(root, 'deploy');
+  paths.deploy = [join(root, 'deploy')];
   paths.deployments = join(root, 'deployments');
   paths.sources = join(root, 'src');
 
