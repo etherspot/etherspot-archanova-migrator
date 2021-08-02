@@ -20,15 +20,29 @@ export function isAddress(value: string): boolean {
   return result;
 }
 
-export function prepareTokensArgs(items: MigrationToken[]): any[] {
+export function prepareERC20TokensArgs(items: MigrationToken[]): any[] {
   const result: any[][] = [[], []];
 
   for (const item of items) {
     const { token, amount } = item as MigrationERC20Token;
-    const { id } = item as MigrationERC721Token;
 
     result[0].push(token);
-    result[1].push(amount || id);
+    result[1].push(amount);
+  }
+
+  return result;
+}
+
+export function prepareERC721TokensArgs(items: MigrationToken[]): any[] {
+  const result: any[][] = [[], [], []];
+
+  for (const item of items) {
+    const { token } = item as MigrationERC20Token;
+    const { id, useLegacyTransferMethod } = item as MigrationERC721Token;
+
+    result[0].push(token);
+    result[1].push(id);
+    result[2].push(useLegacyTransferMethod);
   }
 
   return result;

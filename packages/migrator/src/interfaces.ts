@@ -24,6 +24,7 @@ export interface MigrationERC20Token extends MigrationCommonToken {
 
 export interface MigrationERC721Token extends MigrationCommonToken {
   id: BigNumberish;
+  useLegacyTransferMethod?: boolean;
 }
 
 export type MigrationToken = MigrationERC20Token | MigrationERC721Token;

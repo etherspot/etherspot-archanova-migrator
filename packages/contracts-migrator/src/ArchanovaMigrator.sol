@@ -170,6 +170,7 @@ contract ArchanovaMigrator is Initializable {
     address payable etherspotAccount,
     address[] calldata erc721Tokens,
     uint256[] calldata erc721TokensIds,
+    bool[] calldata erc721UseTransferSelectors,
     bytes calldata archanovaAccountDeviceSignature
   )
     external
@@ -184,7 +185,8 @@ contract ArchanovaMigrator is Initializable {
       archanovaAccount,
       etherspotAccount,
       erc721Tokens,
-      erc721TokensIds
+      erc721TokensIds,
+      erc721UseTransferSelectors
     );
   }
 
@@ -194,6 +196,7 @@ contract ArchanovaMigrator is Initializable {
     uint256 value,
     address[] calldata erc721Tokens,
     uint256[] calldata erc721TokensIds,
+    bool[] calldata erc721UseTransferSelectors,
     bytes calldata archanovaAccountDeviceSignature
   )
     external
@@ -214,7 +217,8 @@ contract ArchanovaMigrator is Initializable {
       archanovaAccount,
       etherspotAccount,
       erc721Tokens,
-      erc721TokensIds
+      erc721TokensIds,
+      erc721UseTransferSelectors
     );
   }
 
@@ -225,6 +229,7 @@ contract ArchanovaMigrator is Initializable {
     uint256[] calldata erc20TokensAmounts,
     address[] calldata erc721Tokens,
     uint256[] calldata erc721TokensIds,
+    bool[] calldata erc721UseTransferSelectors,
     bytes calldata archanovaAccountDeviceSignature
   )
     external
@@ -246,7 +251,8 @@ contract ArchanovaMigrator is Initializable {
       archanovaAccount,
       etherspotAccount,
       erc721Tokens,
-      erc721TokensIds
+      erc721TokensIds,
+      erc721UseTransferSelectors
     );
   }
 
@@ -258,6 +264,7 @@ contract ArchanovaMigrator is Initializable {
     uint256[] calldata erc20TokensAmounts,
     address[] calldata erc721Tokens,
     uint256[] calldata erc721TokensIds,
+    bool[] calldata erc721UseTransferSelectors,
     bytes calldata archanovaAccountDeviceSignature
   )
     external
@@ -285,7 +292,8 @@ contract ArchanovaMigrator is Initializable {
       archanovaAccount,
       etherspotAccount,
       erc721Tokens,
-      erc721TokensIds
+      erc721TokensIds,
+      erc721UseTransferSelectors
     );
   }
 
@@ -411,6 +419,7 @@ contract ArchanovaMigrator is Initializable {
     address payable etherspotAccount,
     address[] calldata erc721Tokens,
     uint256[] calldata erc721TokensIds,
+    bool[] calldata erc721UseTransferSelectors,
     bytes32 ensNode,
     bytes calldata archanovaAccountDeviceSignature
   )
@@ -426,7 +435,8 @@ contract ArchanovaMigrator is Initializable {
       archanovaAccount,
       etherspotAccount,
       erc721Tokens,
-      erc721TokensIds
+      erc721TokensIds,
+      erc721UseTransferSelectors
     );
 
     _transferENSNode(
@@ -442,6 +452,7 @@ contract ArchanovaMigrator is Initializable {
     uint256 value,
     address[] calldata erc721Tokens,
     uint256[] calldata erc721TokensIds,
+    bool[] calldata erc721UseTransferSelectors,
     bytes32 ensNode,
     bytes calldata archanovaAccountDeviceSignature
   )
@@ -463,7 +474,8 @@ contract ArchanovaMigrator is Initializable {
       archanovaAccount,
       etherspotAccount,
       erc721Tokens,
-      erc721TokensIds
+      erc721TokensIds,
+      erc721UseTransferSelectors
     );
 
     _transferENSNode(
@@ -480,6 +492,7 @@ contract ArchanovaMigrator is Initializable {
     uint256[] calldata erc20TokensAmounts,
     address[] calldata erc721Tokens,
     uint256[] calldata erc721TokensIds,
+    bool[] calldata erc721UseTransferSelectors,
     bytes32 ensNode,
     bytes calldata archanovaAccountDeviceSignature
   )
@@ -502,7 +515,8 @@ contract ArchanovaMigrator is Initializable {
       archanovaAccount,
       etherspotAccount,
       erc721Tokens,
-      erc721TokensIds
+      erc721TokensIds,
+      erc721UseTransferSelectors
     );
 
     _transferENSNode(
@@ -520,6 +534,7 @@ contract ArchanovaMigrator is Initializable {
     uint256[] calldata erc20TokensAmounts,
     address[] calldata erc721Tokens,
     uint256[] calldata erc721TokensIds,
+    bool[] memory erc721UseTransferSelectors,
     bytes32 ensNode,
     bytes calldata archanovaAccountDeviceSignature
   )
@@ -548,7 +563,8 @@ contract ArchanovaMigrator is Initializable {
       archanovaAccount,
       etherspotAccount,
       erc721Tokens,
-      erc721TokensIds
+      erc721TokensIds,
+      erc721UseTransferSelectors
     );
 
     _transferENSNode(
@@ -632,7 +648,8 @@ contract ArchanovaMigrator is Initializable {
     address payable archanovaAccount,
     address payable etherspotAccount,
     address[] memory tokens,
-    uint256[] memory tokensIds
+    uint256[] memory tokensIds,
+    bool[] memory useTransferSelectors
   )
     private
   {
@@ -643,7 +660,8 @@ contract ArchanovaMigrator is Initializable {
         archanovaAccount,
         etherspotAccount,
         payable(tokens[i]),
-        tokensIds[i]
+        tokensIds[i],
+        useTransferSelectors[i]
       );
     }
   }
@@ -652,16 +670,23 @@ contract ArchanovaMigrator is Initializable {
     address payable archanovaAccount,
     address payable etherspotAccount,
     address payable token,
-    uint256 tokenId
+    uint256 tokenId,
+    bool useTransferSelector
   )
   private
   {
-    bytes memory data = abi.encodeWithSelector(
-      TRANSFER_FROM_SELECTOR,
-      archanovaAccount,
-      etherspotAccount,
-      tokenId
-    );
+    bytes memory data = useTransferSelector
+      ? abi.encodeWithSelector(
+        TRANSFER_SELECTOR,
+        etherspotAccount,
+        tokenId
+      ) :
+      abi.encodeWithSelector(
+        TRANSFER_FROM_SELECTOR,
+        archanovaAccount,
+        etherspotAccount,
+        tokenId
+      );
 
     bytes memory response = ArchanovaAccount(archanovaAccount).executeTransaction(
       token,
