@@ -1,6 +1,6 @@
 {
   "name": "@etherspot/archanova-contracts-migrator",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Etherspot archanova migrator contracts",
   "license": "MIT",
   "main": "./dist/index.js",

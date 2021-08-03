@@ -1,6 +1,6 @@
 {
   "name": "@etherspot/archanova-migrator",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Etherspot archanova migrator",
   "license": "MIT",
   "main": "./dist/index.js",
@@ -16,7 +16,7 @@
     "test:unit-watch": "jest --watch"
   },
   "dependencies": {
-    "@etherspot/archanova-contracts-migrator": "2.0.0"
+    "@etherspot/archanova-contracts-migrator": "2.1.0"
   },
   "devDependencies": {
     "@etherspot/archanova-contracts-common": "1.0.0",
